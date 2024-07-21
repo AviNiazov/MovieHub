@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <title>MovieHub</title>
+</head>
+<body>
+    <div class="head-container">
+        <div class="action-buttons">
+            <h2 class="add"><a href="addMovies.html" class="fas fa-plus-circle"></a><a href="addMovies.html">Add</a></h2>
+            <h2 class="remove"><a href="removeMovies.html" class="fas fa-minus-circle"></a><a href="removeMovies.html">Remove</a></h2>
+        </div>
+        <h1>MovieHub</h1>
+        <div class="nav-links">
+            <a href="#" class="nav-link" id="saved-movies-link"><i class="fas fa-heart"></i></a>
+        </div>
+        <input type="search" placeholder="Search...">
+    </div>
+    <div id="movie-list" class="movie-list">
+        <!-- סרטים יוצגו כאן -->
+    </div>
+
+    <!-- Modal להצגת הסרטים השמורים -->
+    <div id="saved-movies-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>סרטים ששמרתי</h2>
+            <div id="saved-movies-list" class="movie-list saved-movies-list">
+                <!-- סרטים שמורים יוצגו כאן -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal להצגת פרטי הסרט -->
+    <div id="movie-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title" class="movie-title"></h2>
+                <div class="modal-header-right">
+                    <p id="modal-release-date" class="movie-release-date"></p>
+                    <i id="save-movie-btn" class="fas fa-heart save-movie-btn"></i>
+                    <span class="close">&times;</span>
+                </div>
+            </div>
+            <p id="modal-description" class="movie-description"></p>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

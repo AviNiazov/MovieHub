@@ -1,0 +1,472 @@
+/* משתנים גלובליים לצבעים */
+:root {
+    --background-color: #ffffff;
+    --text-color: #000000;
+    --primary-color: #1e3c72;
+    --primary-hover-color: #2a5298;
+    --secondary-color: #ccc;
+    --secondary-hover-color: #bbb;
+    --modal-background-color: rgba(0, 0, 0, 0.4);
+    --modal-content-background-color: #fefefe;
+    --header-text-color: #000000;
+    --icon-color: #ffffff; /* צבע לבן לאייקונים */
+    --form-background-color: #ffffff; /* צבע רקע לטופס */
+    --form-text-color: #000000; /* צבע טקסט בטופס */
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-color: #121212;
+        --text-color: #ffffff;
+        --primary-color: #1e3c72;
+        --primary-hover-color: #2a5298;
+        --secondary-color: #555555;
+        --secondary-hover-color: #444444;
+        --modal-background-color: rgba(255, 255, 255, 0.4);
+        --modal-content-background-color: #333333;
+        --header-text-color: #ffffff;
+        --icon-color: #ffffff; /* צבע לבן לאייקונים */
+        --form-background-color: #333333; /* צבע רקע כהה לטופס */
+        --form-text-color: #ffffff; /* צבע טקסט לבן בטופס */
+    }
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    background-size: cover;
+    background-position: center;
+    color: var(--text-color);
+    position: relative;
+}
+
+.head-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: var(--header-background-gradient);
+    color: var(--header-text-color);
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+}
+
+.head-container h1 {
+    margin: 0;
+    font-size: 24px;
+    flex-grow: 1;
+    text-align: center;
+}
+
+/* סגנון עבור כפתורי הפעולה */
+.head-container .action-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.head-container .action-buttons h2 {
+    margin: 0 15px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s;
+    color: var(--header-text-color);
+}
+
+.head-container .action-buttons h2 i {
+    margin-right: 5px;
+}
+
+.head-container .action-buttons h2 a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.head-container .action-buttons h2:hover {
+    transform: scale(1.1);
+}
+
+.head-container .action-buttons h2.add {
+    color: green;
+}
+
+.head-container .action-buttons h2.remove {
+    color: red;
+}
+
+.head-container input[type="search"] {
+    padding: 5px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ffffff; /* צבע רקע לבן */
+    color: #000000; /* צבע טקסט שחור */
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    margin-left: 20px; /* מרווח משמאל לחיפוש */
+}
+
+.nav-links .nav-link {
+    margin-left: 15px;
+    margin-right: 20px; /* הוסף רווח בצד ימין של האייקון */
+    font-size: 24px; /* גודל האייקון */
+    text-decoration: none;
+    color: var(--header-text-color);
+    transition: color 0.3s, transform 0.3s;
+}
+
+.nav-links .nav-link:hover {
+    color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+/* סגנון עבור הרשימה של הסרטים */
+.movie-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 80px; /* כדי לפצות על הבר העליון */
+}
+
+/* סגנון עבור כל תיבת סרט */
+.movie-item {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    padding: 0px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 12vw;
+    height: 18vw; /* שומר על יחס רוחב-גובה */
+    margin: 10px;
+    box-sizing: border-box;
+    transition: transform 0.3s;
+    overflow: hidden; /* מונע מהתמונה לחרוג מגבולותיה */
+    cursor: pointer;
+    position: relative; /* מאפשר מיקום יחסי של הכיתוב */
+    text-align: center; /* מרכוז את הכיתוב */
+}
+
+.movie-item img {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.3s ease; /* מוסיף מעבר חלק */
+}
+
+.movie-item:hover img {
+    transform: scale(1.1); /* מגדיל את התמונה ב-10% */
+}
+
+.movie-item .movie-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.7); /* רקע שקוף לכיתוב */
+    color: #ffffff;
+    padding: 10px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.movie-item:hover .movie-info {
+    opacity: 1; /* מציג את הכיתוב על ידי שינוי האטימות */
+}
+
+.movie-title {
+    font-size: 18px;
+    margin: 0;
+    display: inline-block; /* מאפשר הצגת הלב ליד הכותרת */
+}
+
+.movie-release-date {
+    font-size: 14px;
+    margin: 0;
+    display: inline-block; /* מאפשר הצגת הלב ליד התאריך */
+}
+
+/* סגנון עבור קישור הטריילר */
+.trailer-link {
+    display: block;
+    margin-top: 5px;
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.trailer-link:hover {
+    color: var(--primary-hover-color);
+}
+
+/* סגנון עבור המודל */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: var(--modal-background-color);
+}
+
+.modal-content {
+    background-color: var(--modal-content-background-color);
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%;
+    color: var(--text-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center; /* מרכוז את הפרטים במודל */
+    overflow-y: auto; /* מאפשר גלילה במודל */
+    max-height: 80vh; /* מגביל את הגובה של המודל */
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* סגנון עבור קטעי הטקסט במודל */
+.modal-content h2,
+.modal-content p {
+    margin-bottom: 10px;
+}
+
+.modal-content p:last-child {
+    margin-bottom: 0;
+}
+
+.save-movie-btn {
+    background-color: transparent;
+    color: var(--icon-color);
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.save-movie-btn:hover {
+    color: red;
+}
+
+/* סגנון עבור הגוף */
+.container {
+    max-width: 800px;
+    margin: 100px auto; /* מרכוז את התוכן בעמוד */
+    background-color: var(--form-background-color); /* צבע כהה לטופס */
+    color: var(--form-text-color); /* צבע טקסט בטופס */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center; /* מרכוז את הכותרת */
+}
+
+.container h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+/* סגנון עבור הטופס */
+.container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container form input,
+.container form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #444444; /* צבע רקע כהה לשדות הקלט */
+    color: var(--form-text-color); /* צבע טקסט לשדות הקלט */
+}
+
+.container form button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    font-size: 16px;
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.container form button:hover {
+    background-color: var(--primary-hover-color);
+}
+
+.container form .back-btn {
+    background-color: var(--secondary-color);
+    margin-top: 10px;
+}
+
+.container form .back-btn:hover {
+    background-color: var(--secondary-hover-color);
+}
+
+/* סגנון עבור רשימת הסרטים השמורים במודל */
+.saved-movies-list {
+    max-height: 60vh; /* מגביל את הגובה של רשימת הסרטים השמורים */
+    overflow-y: auto; /* מאפשר גלילה ברשימת הסרטים השמורים */
+}
+
+
+@media (max-width: 768px) {
+    .head-container {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    .head-container h1 {
+        font-size: 20px;
+        text-align: left;
+        display: flex;
+        align-items: center;
+    }
+
+    .burger-menu {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        background-color: var(--modal-content-background-color);
+        position: absolute;
+        top: 60px;
+        left: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 20;
+        display: none; /* Initially hidden */
+    }
+
+    .burger-icon {
+        font-size: 24px;
+        cursor: pointer;
+        margin-left: 10px;
+    }
+
+    .burger-menu .action-buttons {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .burger-menu .action-buttons h2 {
+        font-size: 16px;
+        margin: 5px 0;
+    }
+
+    .head-container .burger-icon {
+        margin-left: auto;
+    }
+
+    .head-container h1 {
+        flex-grow: 0;
+    }
+
+    .head-container input[type="search"] {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .movie-list {
+        margin-top: 60px;
+    }
+
+    .movie-item {
+        width: 45vw;
+        height: 70vw;
+        margin: 5px;
+    }
+
+    .movie-item .movie-info {
+        padding: 5px;
+    }
+
+    .movie-title {
+        font-size: 16px;
+    }
+
+    .movie-release-date {
+        font-size: 12px;
+    }
+
+    .modal-content {
+        width: 90%;
+        margin: 20% auto;
+        padding: 15px;
+    }
+
+    .modal-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .modal-header .close {
+        align-self: flex-end;
+    }
+
+    .container {
+        width: 95%;
+        margin: 20px auto;
+        padding: 20px;
+    }
+
+    .container h1 {
+        font-size: 24px;
+    }
+
+    .container form button {
+        width: 100%;
+    }
+
+    .container form .back-btn {
+        width: 100%;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-links .nav-link {
+        margin: 10px 0;
+        font-size: 20px;
+    }
+}

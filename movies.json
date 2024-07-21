@@ -1,0 +1,20 @@
+[
+    {
+        "title": "The Shawshank Redemption",
+        "genre": "Drama",
+        "releaseDate": "1994-09-23",
+        "description": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency."
+    },
+    {
+        "title": "The Godfather",
+        "genre": "Crime, Drama",
+        "releaseDate": "1972-03-24",
+        "description": "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son."
+    },
+    {
+        "title": "The Dark Knight",
+        "genre": "Action, Crime, Drama",
+        "releaseDate": "2008-07-18",
+        "description": "When the menace known as the Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham."
+    }
+]

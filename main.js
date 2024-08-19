@@ -10,9 +10,7 @@ async function fetchMovies(page = 1) {
     try {
         const response = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=he-IL&page=${page}`);
         const data = await response.json();
-        allMovies = allMovies.concat(data.results); // הוספת הסרטים החדשים לרשימה הקיימת
-
-        // הבאת טריילרים לכל סרט
+        allMovies = allMovies.concat(data.results);  
         const moviesWithTrailers = await Promise.all(
             allMovies.map(async (movie) => {
                 const trailer = await fetchTrailer(movie.id);
@@ -26,7 +24,6 @@ async function fetchMovies(page = 1) {
     }
 }
 
-// הבאת הטריילר לסרט
 async function fetchTrailer(movieId) {
     try {
         const response = await fetch(`${BASE_URL}/movie/${movieId}/videos?api_key=${API_KEY}&language=he-IL`);
@@ -39,7 +36,6 @@ async function fetchTrailer(movieId) {
     }
 }
 
-// הצגת הסרטים ב- DOM
 function displayMovies(movies) {
     const moviesContainer = document.getElementById('movie-list');
     moviesContainer.innerHTML = '';
@@ -56,7 +52,6 @@ function displayMovies(movies) {
             </div>
         `;
 
-        // הוספת אירוע לחיצה לסרט כדי לפתוח את ה-Modal
         movieDiv.addEventListener('click', () => {
             openModal(movie.title, movie.release_date.split('-')[0], movie.overview, movie);
         });
@@ -65,7 +60,6 @@ function displayMovies(movies) {
     });
 }
 
-// פתיחת ה-Modal עם פרטי הסרט
 function openModal(title, releaseDate, description, movie) {
     const modal = document.getElementById('movie-modal');
     const modalTitle = document.getElementById('modal-title');
@@ -78,26 +72,21 @@ function openModal(title, releaseDate, description, movie) {
     modalReleaseDate.textContent = `שחרור: ${releaseDate}`;
     modalDescription.textContent = description;
 
-    // עדכון כפתור השמירה במודל
     saveMovieBtn.classList.toggle('saved', isMovieSaved(movie.id));
-    saveMovieBtn.classList.remove('fa-heart'); // הסר את הסמל הקודם
-    saveMovieBtn.classList.add('fas', 'fa-heart'); // הוסף את הסמל החדש
-    saveMovieBtn.style.color = isMovieSaved(movie.id) ? 'red' : 'black'; // צבע האייקון
-
-    // שמירת הסרט בלחיצה על האייקון
+    saveMovieBtn.classList.remove('fa-heart');  
+    saveMovieBtn.classList.add('fas', 'fa-heart');  
+    saveMovieBtn.style.color = isMovieSaved(movie.id) ? 'red' : 'black'; 
     saveMovieBtn.onclick = () => {
         toggleSaveMovie(movie);
         saveMovieBtn.classList.toggle('saved');
-        saveMovieBtn.style.color = isMovieSaved(movie.id) ? 'red' : 'black'; // עדכון צבע האייקון
+        saveMovieBtn.style.color = isMovieSaved(movie.id) ? 'red' : 'black';
     };
 
-    // סגירת ה-Modal בלחיצה על הכפתור ה- X
     const closeButton = modal.querySelector('.close');
     closeButton.onclick = () => {
         modal.style.display = 'none';
     };
 
-    // סגירת ה-Modal בלחיצה מחוץ לו
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = 'none';
@@ -126,31 +115,25 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// שמירה או הסרה של סרט
 function toggleSaveMovie(movie) {
     let savedMovies = JSON.parse(localStorage.getItem('savedMovies')) || [];
     const movieIndex = savedMovies.findIndex(savedMovie => savedMovie.id === movie.id);
 
     if (movieIndex === -1) {
-        // הוסף סרט אם הוא לא קיים ברשימה
         savedMovies.push(movie);
         localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
         alert('הסרט נשמר בהצלחה!');
     } else {
-        // הסר סרט אם הוא כבר קיים ברשימה
         savedMovies.splice(movieIndex, 1);
         localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
         alert('הסרט הוסר מהשמורים.');
     }
 }
-
-// בדוק אם סרט שמור
 function isMovieSaved(movieId) {
     const savedMovies = JSON.parse(localStorage.getItem('savedMovies')) || [];
     return savedMovies.some(movie => movie.id === movieId);
 }
 
-// הצגת הסרטים השמורים ב-Modal
 function displaySavedMovies() {
     const savedMovies = JSON.parse(localStorage.getItem('savedMovies')) || [];
     const savedMoviesList = document.getElementById('saved-movies-list');
@@ -169,42 +152,32 @@ function displaySavedMovies() {
             </div>
         `;
 
-        // הוספת אירוע לחיצה לסרט ב-Modal כדי לפתוח את ה-Modal של הסרט
         movieDiv.addEventListener('click', () => {
             openModal(movie.title, movie.release_date.split('-')[0], movie.overview, movie);
         });
 
-        // הוספת אירוע לחיצה להסרת סרט מה-Modal
         const removeButton = movieDiv.querySelector('.remove-movie-btn');
         removeButton.addEventListener('click', (event) => {
-            event.stopPropagation(); // עצירת מעבר האירוע למודאל
-            toggleSaveMovie(movie); // הסרת הסרט מהרשימה
-            displaySavedMovies(); // עדכון רשימת הסרטים השמורים
+            event.stopPropagation();  
+            toggleSaveMovie(movie); 
+            displaySavedMovies();  
         });
 
         savedMoviesList.appendChild(movieDiv);
     });
 
-    // פתיחת ה-Modal של הסרטים השמורים
     const savedMoviesModal = document.getElementById('saved-movies-modal');
     savedMoviesModal.style.display = 'block';
 
-    // סגירת ה-Modal של הסרטים השמורים
     const closeButton = savedMoviesModal.querySelector('.close');
     closeButton.onclick = () => {
         savedMoviesModal.style.display = 'none';
     };
-
-    // סגירת ה-Modal בלחיצה מחוץ לו
     window.onclick = function(event) {
         if (event.target == savedMoviesModal) {
             savedMoviesModal.style.display = 'none';
         }
     }
 }
-
-// פתיחת ה-Modal של הסרטים השמורים בלחיצה על האייקון
 document.getElementById('saved-movies-link').addEventListener('click', displaySavedMovies);
-
-// אתחול העמוד
 document.addEventListener('DOMContentLoaded', () => fetchMovies(currentPage));
